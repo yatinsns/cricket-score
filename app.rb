@@ -17,9 +17,8 @@ module ChatDemo
       div = get_live_score_div page
       li = get_li_with_tournament_title "WORLD T20", div
       scorelines = get_scorelines li
-      result = ""
       scorelines.each do |scoreline|
-        result = "#{result}\n#{get_scoreline_title scoreline}"
+        result = "#{get_scoreline_title scoreline}"
 	start_time = get_scoreline_start_time scoreline
 	result = "#{result}\nStart time: #{start_time}" if start_time.length > 0
       end
