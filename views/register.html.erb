@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flocklets</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #copyCode {
+            padding-top: 20px;
+            width:100%;
+            height:125px;
+        }
+
+        #copyCode textarea {
+            width:100%;
+            height:100%;
+        }
+
+        .jumbotron label{
+            font-size: 20px;
+            padding-top: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Flocklets</h1>
+        <p>Fill out this simple form here to get a cool Flocklet for your website :)</p>
+        <br>
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="incoming-webhook-url">Incoming webhook URL:</label>
+                <input id="incoming-webhook-url" name="incoming-webhook-url" type="text" class="form-control" placeholder="Enter incoming webhook URL here" autofocus required/>
+            </div>
+            <div class="form-group">
+                <label for="outgoing-webhook-token">
+                    Outgoing webhook token:<Br>
+                    <small>Configure outgoing webhook with callback URL: https://flockathon.fwd.wf/support</small>
+                </label>
+
+                <input id="outgoing-webhook-token" name="outgoing-webhook-token" type="text" class="form-control" placeholder="Enter outgoing webhook token here" autofocus required/>
+            </div>
+
+            <div class="form-group">
+                <label for="support-name">Support name:</label>
+                <input id="support-name" name="support-name" type="text" class="form-control" placeholder="Example: Flock support" autofocus required/>
+            </div>
+            <div class="form-group">
+                <label for="welcome-message">Welcome message:</label>
+                <input id="welcome-message" name="welcome-message" type="text" class="form-control" placeholder="Example: Welcome to Flocklets!" autofocus required/>
+            </div>
+            <button type="submit" class="btn btn-default" id="submitButton">Submit</button>
+        </form>
+
+        <div id="copyCode" style="display: none;">
+            <div>Copy and add this code at the beginning of your website:</div>
+            <textarea readonly></textarea>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#registerForm").submit(function () {
+            $("#submitButton").text("Submitting");
+            $("#submitButton").attr("disabled", true);
+
+            $.post( "/register", {
+                "incoming-url": $("#incoming-webhook-url").val(),
+                "outgoing-token": $("#outgoing-webhook-token").val(),
+                "support-name": $("#support-name").val(),
+                "welcome-message": $("#welcome-message").val()
+            }).done(function(data) {
+                var JSONData = JSON.parse(data);
+                console.log(JSONData);
+                var uuid = JSONData.uuid;
+                $("#copyCode").css("display", "block");
+                $("#copyCode textarea").val(
+                    "<script>var flocksterID='" + uuid + "'<\/script>" +
+                    "<link href='https://cdn.rawgit.com/uditiiita/flockathon-frontend/master/app.css' rel='stylesheet'> " +
+                    "<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js'><\/script>" +
+                    "<script src='https://cdn.rawgit.com/uditiiita/flockathon-frontend/master/app.js'><\/script>"
+                );
+
+                $("#submitButton").text("Submit");
+                $("#submitButton").attr("disabled", false);
+            });
+            event.preventDefault();
+        });
+    });
+
+</script>
+</body>
+</html>
