@@ -6,13 +6,12 @@ require_relative "./get_score.rb"
 module ChatDemo
   class App < Sinatra::Base
     post "/support" do
-#      data = JSON.parse(request.body.read.to_s)
-#      values = data['text'].split(':')
-#      user = values[0]
-#      text = values[1]
+      data = JSON.parse(request.body.read.to_s)
+      values = data['text'].split(':')
+      user = values[0]
+      text = values[1]
 
-#      result = nil
-=begin
+      result = nil
       if data['text'] =~ /cricket score(.*)/
       page = get_page "http://www.espncricinfo.com"
       div = get_live_score_div page
@@ -28,8 +27,6 @@ module ChatDemo
 
 
       { :text => result}.to_json unless result.nil?
-=end
-      { :text => "welcome"}.to_json
     end
   end
 end
