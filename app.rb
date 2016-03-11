@@ -12,6 +12,7 @@ module ChatDemo
       text = values[1]
 
       result = nil
+=begin
       if data['text'] =~ /cricket score(.*)/
       page = get_page "http://www.espncricinfo.com"
       div = get_live_score_div page
@@ -27,6 +28,8 @@ module ChatDemo
 
 
       { :text => result}.to_json unless result.nil?
+=end
+      { :text => "welcome"}.to_json
     end
   end
 end
