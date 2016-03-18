@@ -12,7 +12,7 @@ module ChatDemo
       text = values[1]
 
       result = nil
-      if data['text'] =~ /cricket score(.*)/
+      if data['text'] =~ /cricket score(.*)/i
       page = get_page "http://www.espncricinfo.com"
       div = get_live_score_div page
       li = get_li_with_tournament_title "WORLD T20", div
