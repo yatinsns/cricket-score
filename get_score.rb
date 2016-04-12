@@ -48,7 +48,7 @@ end
 def main
   page = get_page "http://www.espncricinfo.com"
   div = get_live_score_div page
-  li = get_li_with_tournament_title "WORLD T20", div
+  li = get_li_with_tournament_title "INDIAN PREMIER LEAGUE", div
   scorelines = get_scorelines li
   scorelines.each do |scoreline|
     puts get_scoreline_title scoreline
